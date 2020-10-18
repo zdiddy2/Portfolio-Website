@@ -1,0 +1,64 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title
+    link(rel='shortcut icon' href='/static/images/favicon.svg' type='image/svg+xml')
+    link(rel='stylesheet' type='text/css' href='/static/stylesheets/about.css')
+    link(href='https://fonts.googleapis.com/css2?family=Roboto&display=swap' rel='stylesheet')
+body(onload="changeOpacity()")
+    #svg
+        span.svgContainer.da(style='left: 15vw; top: 18vh;')
+            img(src='/static/images/Angle.svg' alt='' style='transform: rotate(80deg);')
+        span.svgContainer(style='left: 45vw; top: 13vh;')
+            img.disappear(src='/static/images/Angle.svg' alt='' style='transform: rotate(145deg);')
+        span.svgContainer.da(style='left: 6vw; top: 80vh;')
+            img(src='/static/images/Angle.svg' alt='' style='transform: rotate(45deg);')
+        span.svgContainer.da(style='left: 68vw; top: 26vh;')
+            img(src='/static/images/Angle.svg' alt='' style='transform: rotate(2deg);')
+        span.svgContainer(style='left: 32vw; top: 58vh;')
+            img(src='/static/images/Angle.svg' alt='' style='transform: rotate(275eg);')
+        span.svgContainer(style='left: 76vw; top: 68vh;')
+            img.disappear(src='/static/images/Angle.svg' alt='' style='transform: rotate(98deg);')
+    header
+        #nav
+            button#closeButton.appear
+                img(src='/static/images/closeButton.svg' alt='')
+            a.green(href='/home') Home
+            a.green(href='/about') About Me
+            a.green(href='') Portfolio
+            a.green(href='') A Little Fun
+    button#menuButton.appear
+        img#menuSVG.show(src='/static/images/menu.svg' alt='')
+    main
+        #picture
+            img(src="/static/images/ezra.jpg", alt="")
+            h4.green
+                | I am currently a student at Ogden High School and OWATC learning computer science.
+                | I enjoy tinkering with microcontrollers to make fun projects, performing/writing music, mountain biking and mechanical engineering.
+                | I want to gain experience working in the industry to finish learning a lot of the principles I've built so far.
+                | Currently I am looking to take an internship working with a team so I can learn how to properly apply the code
+                | that I can write. I want to learn how to build full softwares and properly structure projects.
+    script.
+        function changeOpacity(){
+        document.getElementById('svg').style.opacity = 1;
+        }
+        function displayNav(){
+        let nav = document.getElementById('nav');
+        nav.style.transition = 'transform 1s ease';
+        nav.classList.add('navEnter');
+        document.getElementById("menuButton").classList.add("disappear");
+        }
+        function hideNav(){
+        let nav = document.getElementById('nav');
+        nav.classList.remove('navEnter');
+        sleep(1000).then(() => {
+        nav.style.transition = ""
+        document.getElementById("menuButton").classList.remove("disappear");
+        });
+        }
+        document.getElementById("menuButton").onclick = displayNav;
+        document.getElementById("closeButton").onclick = hideNav;
+        const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+        }
