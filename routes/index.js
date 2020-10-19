@@ -1,6 +1,9 @@
 const { exec } = require('child_process');
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
+
+var jsonParser = bodyParser.json();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -15,8 +18,8 @@ router.get('/about', function (req, res, next) {
   res.render('about.pug');
 });
 
-router.post('/payload', function (req, res, next) {
-  console.log(req.body.pusher.name + 'just pushed to ' + req.body.repository.name);
+router.post('/payload', jsonParser, function (req, res, next) {
+  console.log(req.body.sender.login + ' just pushed to ' + req.body.repository.name);
 
   console.log('pulling code from GitHub...');
 
