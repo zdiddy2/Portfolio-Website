@@ -15,7 +15,7 @@ router.get('/home', function (req, res, next) {
 });
 
 router.get('/about', function (req, res, next) {
-  res.render('index.pug');
+  res.render('about.pug');
 });
 
 router.post('/payload', jsonParser, function (req, res, next) {
