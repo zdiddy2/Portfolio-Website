@@ -23,10 +23,10 @@ router.post('/payload', jsonParser, function (req, res, next) {
 
   console.log('pulling code from GitHub...');
 
-  exec('gitreset --hard' +
-      '&& git clean -df' + 
-      '&& git pull' + 
-      '&& npm install --production', execCallBack);
+  exec('git -C /var/www/portfolio reset --hard' +
+      '&& git -C /var/www/portfolio clean -df' + 
+      '&& git -C /var/www/portfolio pull' + 
+      '&& npm -C /var/www/portfolio install --production', execCallBack);
 
   res.sendStatus(200);
   res.end();
