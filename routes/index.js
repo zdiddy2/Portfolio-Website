@@ -18,6 +18,10 @@ router.get('/about', function (req, res, next) {
   res.render('about.pug');
 });
 
+router.get('portfolio', function(req, res, next) {
+  res.render('about.pug');
+});
+
 router.post('/payload', jsonParser, function (req, res, next) {
   console.log(req.body.sender.login + ' just pushed to ' + req.body.repository.name);
 
@@ -28,7 +32,7 @@ router.post('/payload', jsonParser, function (req, res, next) {
   exec('git -C /var/www/portfolio clean -df', execCallBack);
 
   exec('&& git -C /var/www/portfolio pull', execCallBack);
-  
+
   exec('&& npm -C /var/www/portfolio install --production', execCallBack);
 
   res.sendStatus(200);
