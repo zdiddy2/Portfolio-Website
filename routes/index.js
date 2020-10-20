@@ -19,7 +19,7 @@ router.get('/about', function (req, res, next) {
 });
 
 router.get('/portfolio', function(req, res, next) {
-  res.render('about.pug');
+  res.render('index.pug');
 });
 
 router.post('/payload', jsonParser, function (req, res, next) {
