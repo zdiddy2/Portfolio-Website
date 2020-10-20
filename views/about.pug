@@ -6,6 +6,7 @@ head
     link(rel='shortcut icon' href='/static/images/favicon.svg' type='image/svg+xml')
     link(rel='stylesheet' type='text/css' href='/static/stylesheets/about.css')
     link(href='https://fonts.googleapis.com/css2?family=Roboto&display=swap' rel='stylesheet')
+    link(href='https://css.gg/mail.css' rel='stylesheet')
 body(onload="changeOpacity()")
     #svg
         span.svgContainer.da(style='left: 15vw; top: 18vh;')
@@ -28,6 +29,10 @@ body(onload="changeOpacity()")
             a.green(href='/about') About Me
             a.green(href='') Portfolio
             a.green(href='') A Little Fun
+            a.mail(href="mailto:z.diddy.2@gmail.com")
+                span.blue
+                    |z.diddy.2@gmail.com
+                img(src='/static/images/mail.svg')
     button#menuButton.appear
         img#menuSVG.show(src='/static/images/menu.svg' alt='')
     main

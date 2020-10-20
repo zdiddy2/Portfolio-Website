@@ -30,13 +30,13 @@ main #picture {
   min-height: 100%;
 }
 
-main img{
+main img {
   max-width: 45vw;
   max-height: 75vh;
   margin: 3vh 5vw 3vh 5vw;
 }
 
-main h4{
+main h4 {
   margin: 2vh 3vw 2vh 3vw;
   font-size: calc(12px + 1.2vw);
   text-align: center;
@@ -175,6 +175,26 @@ header a:hover {
   outline: none;
 }
 
+.mail {
+  margin: auto 30px auto auto;
+  display: flex;
+  align-items: center;
+}
+.mail img {
+  width: calc(25px + 1.3vw);
+}
+
+.mail span {
+  font-size: 1.2vh;
+  opacity: 0;
+  transition: all 1s ease;
+  margin: 10px;
+}
+
+.mail:hover span {
+  opacity: 1;
+}
+
 @media only screen and (max-width: 600px) {
   header {
     position: absolute;
@@ -210,13 +230,18 @@ header a:hover {
     display: inherit;
   }
 
-  main #picture{
+  main #picture {
     flex-direction: column;
     align-items: center;
   }
 
-  #picture img{
+  #picture img {
     max-width: 85vw;
     max-height: 50vh;
+  }
+
+  .mail {
+    margin: auto auto 30px auto;
+    flex-direction: column;
   }
 }
