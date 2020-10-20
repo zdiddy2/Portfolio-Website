@@ -19,6 +19,10 @@ router.get('/about', function (req, res, next) {
 });
 
 router.get('/portfolio', function(req, res, next) {
+  res.render('portfolio.pug');
+});
+
+router.get('/fun', function(req, res, next) {
   res.render('index.pug');
 });
 
