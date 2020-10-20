@@ -31,7 +31,7 @@ router.post('/payload', jsonParser, function (req, res, next) {
       
   exec('git -C /var/www/portfolio clean -df', execCallBack);
 
-  exec('git -C /var/www/portfolio pull', execCallBack);
+  exec('git -C /var/www/portfolio pull origin master', execCallBack);
 
   exec('npm -C /var/www/portfolio install --production', execCallBack);
 
