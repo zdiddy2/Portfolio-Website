@@ -11,3 +11,6 @@ This website is my main portfolio project. I am hosting my own nodejs webserver 
 	- OPENSSH is what i use to connect for remote development/management, it also generated the key and public key for connecting
 - NodeJS
 	- NodeJS is the server runtime environment I am using, it is running an express app using pug as the default view engine.
+- Node Supervisor
+	- Node Supervisory is what runs the node server and it automatically updates the code when the master branch is updated. The webhook and commands for pulling the github
+	repository are in routs/index.js
