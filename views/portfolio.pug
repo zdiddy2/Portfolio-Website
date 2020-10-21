@@ -1,0 +1,157 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title
+    link(rel='shortcut icon' href='/static/images/favicon.svg' type='image/svg+xml')
+    link(rel='stylesheet' type='text/css' href='/static/stylesheets/about.css')
+    link(href='https://fonts.googleapis.com/css2?family=Roboto&display=swap' rel='stylesheet')
+    link(href='https://css.gg/mail.css' rel='stylesheet')
+    script(src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js")
+body(onload="changeOpacity()")
+    #svg
+    header
+        #nav
+            button#closeButton.appear
+                img(src='/static/images/closeButton.svg' alt='')
+            a.green(href='/home') Home
+            a.green(href='/about') About Me
+            a.green(href='/portfolio') Portfolio
+            a.green(href='/fun') A Little Fun
+            a.mail(href="mailto:z.diddy.2@gmail.com")
+                span.blue
+                    |z.diddy.2@gmail.com
+                img(src='/static/images/mail.svg')
+    button#menuButton.appear
+        img#menuSVG.show(src='/static/images/menu.svg' alt='')
+    main
+        #picture
+            h4.green
+                
+    script.
+        function changeOpacity(){
+            document.getElementById('svg').style.opacity = 1;
+        }
+        function displayNav(){
+            let nav = document.getElementById('nav');
+            nav.style.transition = 'transform 1s ease';
+            nav.classList.add('navEnter');
+            document.getElementById("menuButton").classList.add("disappear");
+        }
+        function hideNav(){
+            let nav = document.getElementById('nav');
+            nav.classList.remove('navEnter');
+            sleep(1000).then(() => {
+            nav.style.transition = ""
+            document.getElementById("menuButton").classList.remove("disappear");
+        });
+        }
+        document.getElementById("menuButton").onclick = displayNav;
+        document.getElementById("closeButton").onclick = hideNav;
+
+        const sleep = (milliseconds) => {
+            return new Promise(resolve => setTimeout(resolve, milliseconds))
+        }
+
+        function random(min, max) {
+            return ~~(Math.random() * (max - min + 1) + min);
+        }
+
+        function distance(x1, y1, x2, y2){
+            return Math.hypot(x2-x1, y2-y1);
+        }
+
+        const MAGNITUDE = 2;
+        const SPEED = 0.2;
+
+        class MovingCircle {
+            constructor(rad, draw){
+                this.circle = draw.circle(rad).fill('#66c4ff');
+                this.circle.move(random(0, window.innerWidth - rad), random(0, window.innerHeight - rad));
+                this.dir = {
+                    x: random(-30, 30),
+                    y: random(-30, 30)
+                }
+                this.dir = this.normalizeVec(this.dir);
+            }
+
+            updatePos(){
+                this.circle.dmove(this.dir.x * SPEED, this.dir.y * SPEED);
+                //wrap circles
+                if(this.circle.cx() > window.innerWidth)
+                    this.circle.cx(0);
+                else if(this.circle.cx() < 0)
+                    this.circle.cx(window.innerWidth);
+                if(this.circle.cy() > window.innerHeight)
+                    this.circle.cy(0);
+                else if(this.circle.cy() < 0)
+                    this.circle.cy(window.innerHeight);
+            }
+
+            normalizeVec(v){
+                let mag = Math.hypot(v.x, v.y);
+                v.x = Math.round(v.x / mag);
+                v.y = Math.round(v.y / mag);
+                return v;
+            }
+        }
+
+        const NUM_CIRCLES = 25;
+        const RADIUS = 10;
+
+        var circles = [];
+
+        var draw = SVG().addTo(document.getElementById('svg')).size(window.innerWidth, window.innerHeight);
+
+        for(let i = 0; i < NUM_CIRCLES; i++){
+            circles.push(new MovingCircle(RADIUS, draw));
+        }
+        
+        var lines = [];
+        
+        function drawLines(){
+            for(let i = 0 ; i < circles.length; i++){
+                for(let j = 0; j < circles.length; j++){
+                    let C = circles[i];
+                    let oC = circles[j];
+                    if(i != j){
+                        let line = draw.line(C.circle.cx(), C.circle.cy(), oC.circle.cx(), oC.circle.cy());
+                        line.stroke({color: '#66c4ff', width: 0});
+                        line.remember('c1', C);
+                        line.remember('c2', oC);
+                        lines.push(line);
+                    }
+                }
+            }
+        }
+
+        function updateLines(){
+            lines.forEach(line => {
+                let c1 = line.remember('c1');
+                let c2 = line.remember('c2');
+                let dist = distance(c1.circle.cx(), c1.circle.cy(), c2.circle.cx(), c2.circle.cy());
+                if(dist < 250){
+                    line.stroke({color: '#66c4ff', width: RADIUS * Math.pow(1/1.045, dist)});
+                    line.attr({x1: c1.circle.cx(), y1: c1.circle.cy(), x2: c2.circle.cx(), y2: c2.circle.cy()});
+                } else{
+                    line.stroke({width: 0});
+                }
+            });
+        }
+
+        drawLines();
+        function frame(delta){
+            circles.forEach(c => {
+                c.updatePos();
+            });
+            updateLines();
+            window.requestAnimationFrame(frame);
+        }
+        window.requestAnimationFrame(frame);
+
+
+        //- var draw = SVG().addTo(document.getElementById('svg')).size(window.innerWidth, window.innerHeight);
+        //- var circle = draw.circle(10).fill('#66c4ff').move(100, 150);
+        //- var circle2 = draw.circle(10).fill('#66c4ff').move(300, 500);
+        //- var line = draw.line(circle.cx(), circle.cy(), circle2.cx(), circle2.cy());
+        //- line.stroke({color: '#66c4ff', width: 3, linecap: 'round'});
