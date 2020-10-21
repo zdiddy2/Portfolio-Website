@@ -6,7 +6,7 @@
 
 var app = require('../app');
 var debug = require('debug')('portfolio:server');
-var https = require('https');
+var https = require('http');
 var fs = require('fs');
 var http = require('../httpRedirect');
 
@@ -15,19 +15,14 @@ var redirectPort = '80'
 http.listen(redirectPort);
 
 
-var port = '443';
+var port = '8080';
 app.set('port', port);
-
-var options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/semanticerr.ddns.net/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/semanticerr.ddns.net/fullchain.pem')
-}
 
 /**
  * Create HTTPS server.
  */
 
-var server = https.createServer(options, app);
+var server = https.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
