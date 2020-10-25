@@ -17,7 +17,32 @@ main
     |  Web Developer
   button.blue
     a(href='/portfolio') My Other Work
-footer
-  a.green(href='/about') About Me
-  a.green(href='/portfolio') PortFolio
-  a.green(href='/fun') A Little Fun
+header
+  #nav
+    button#closeButton.appear
+      img(src='/static/images/closeButton.svg' alt='')
+    a.green(href='/about') About Me
+    a.green(href='/portfolio') PortFolio
+    a.green(href='/fun') A Little Fun
+  button#menuButton.appear
+        img#menuSVG.show(src='/static/images/menu.svg' alt='')
+script.
+  function displayNav(){
+  let nav = document.getElementById('nav');
+  nav.style.transition = 'transform 1s ease';
+  nav.classList.add('navEnter');
+  document.getElementById("menuButton").classList.add("disappear");
+  }
+  function hideNav(){
+  let nav = document.getElementById('nav');
+  nav.classList.remove('navEnter');
+  sleep(1000).then(() => {
+  nav.style.transition = ""
+  document.getElementById("menuButton").classList.remove("disappear");
+  });
+  }
+  document.getElementById("menuButton").onclick = displayNav;
+  document.getElementById("closeButton").onclick = hideNav;
+  const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
